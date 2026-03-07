@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://otiw4dblwc21"]
+
+[ext_resource type="Script" uid="uid://cqtdvf76ekmp3" path="res://scripts/multiplayer_ui.gd" id="1_luirv"]
+
+[node name="MultiplayerUI" type="Control" unique_id=2043122905]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_luirv")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=18371946]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="server" type="Button" parent="VBoxContainer" unique_id=1798522873]
+layout_mode = 2
+text = "SERVER"
+
+[node name="client" type="Button" parent="VBoxContainer" unique_id=445866185]
+layout_mode = 2
+text = "CLIENT"
