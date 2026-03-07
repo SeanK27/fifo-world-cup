@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://d0jfhj1dl4vx7"]
 
-[ext_resource type="PackedScene" uid="uid://dui2kk0tcr4ub" path="res://scenes/player.tscn" id="1_uwrxv"]
+[ext_resource type="PackedScene" uid="uid://dui2kk0tcr4ub" path="res://scenes/player.tscn" id="1_twfvg"]
+[ext_resource type="PackedScene" uid="uid://b62f6t3xdk2gs" path="res://scenes/ball.tscn" id="2_pmrbq"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_uwrxv"]
 normal = Vector2(-0.00961494, -0.9999538)
@@ -8,7 +9,7 @@ distance = 4.0286593
 
 [node name="Game" type="Node2D" unique_id=84307633]
 
-[node name="Player" parent="." unique_id=1204856989 instance=ExtResource("1_uwrxv")]
+[node name="Player" parent="." unique_id=1204856989 instance=ExtResource("1_twfvg")]
 position = Vector2(1, -5)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=110015715]
@@ -21,3 +22,6 @@ position = Vector2(0, 14)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=24463419]
 position = Vector2(0, 2)
 shape = SubResource("WorldBoundaryShape2D_uwrxv")
+
+[node name="RigidBody2D" parent="." unique_id=1031230908 instance=ExtResource("2_pmrbq")]
+position = Vector2(26, -7)
