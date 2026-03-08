@@ -164,13 +164,19 @@ func _setup_spectator_view() -> void:
 	soccer_scene.get_node("Camera2D").make_current()
 	NetworkManager.spectator_state_updated.connect(_on_spectator_state_updated)
 
-func _on_spectator_state_updated(p1_pos: Vector2, p2_pos: Vector2, ball_pos: Vector2) -> void:
+func _on_spectator_state_updated(p1_pos: Vector2, p2_pos: Vector2, ball_pos: Vector2, p1_anim: String, p1_flip: bool, p2_anim: String, p2_flip: bool) -> void:
 	if spectate_viewport.get_child_count() == 0:
 		return
 	var soccer = spectate_viewport.get_child(0)
 	soccer.get_node("Player1").global_position = p1_pos
 	soccer.get_node("Player2").global_position = p2_pos
 	soccer.get_node("Ball").global_position = ball_pos
+	var p1_sprite: AnimatedSprite2D = soccer.get_node("Player1/AnimatedSprite2D")
+	p1_sprite.flip_h = p1_flip
+	p1_sprite.play(p1_anim)
+	var p2_sprite: AnimatedSprite2D = soccer.get_node("Player2/AnimatedSprite2D")
+	p2_sprite.flip_h = p2_flip
+	p2_sprite.play(p2_anim)
 
 func _on_menu_pressed() -> void:
 	NetworkManager.disconnect_network()

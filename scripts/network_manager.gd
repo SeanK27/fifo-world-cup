@@ -7,7 +7,7 @@ signal player_connected(peer_id: int)
 signal player_disconnected(peer_id: int)
 signal connected_to_server
 signal connection_failed
-signal spectator_state_updated(p1_pos: Vector2, p2_pos: Vector2, ball_pos: Vector2)
+signal spectator_state_updated(p1_pos: Vector2, p2_pos: Vector2, ball_pos: Vector2, p1_anim: String, p1_flip: bool, p2_anim: String, p2_flip: bool)
 signal spectator_score_updated(score_left: int, score_right: int)
 
 var remote_peer_id: int = 0
@@ -69,8 +69,8 @@ func _send_spectator_to_betting() -> void:
 
 # Server relays live game positions so the spectator's SubViewport can mirror them
 @rpc("authority", "call_remote", "unreliable")
-func _relay_spectator_game_state(p1_pos: Vector2, p2_pos: Vector2, ball_pos: Vector2) -> void:
-	spectator_state_updated.emit(p1_pos, p2_pos, ball_pos)
+func _relay_spectator_game_state(p1_pos: Vector2, p2_pos: Vector2, ball_pos: Vector2, p1_anim: String, p1_flip: bool, p2_anim: String, p2_flip: bool) -> void:
+	spectator_state_updated.emit(p1_pos, p2_pos, ball_pos, p1_anim, p1_flip, p2_anim, p2_flip)
 
 # Server relays goal scores to the spectator
 @rpc("authority", "call_remote", "reliable")

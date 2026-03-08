@@ -12,6 +12,8 @@ var blue_sprites = [1, 2]
 var red_sprites = [3 ,4]
 
 var spritenum = "1"
+var current_anim: String = "down1"
+var current_flip: bool = false
 
 func _ready():
 	randomize()
@@ -22,7 +24,8 @@ func _ready():
 		spritenum = str(blue_sprites.pick_random())
 		
 	$AnimatedSprite2D.play("down"+spritenum)
-		
+	current_anim = "down" + spritenum
+	
 	
 
 # Direct kick (used server-side and in single-player)
@@ -83,6 +86,8 @@ func _physics_process(_delta: float) -> void:
 				anim = "up"+spritenum
 	sprite.flip_h = flip
 	sprite.play(anim)
+	current_anim = anim
+	current_flip = flip
 	
 	if multiplayer.has_multiplayer_peer():
 		_sync_animation.rpc(anim, flip)
@@ -108,3 +113,5 @@ func _sync_animation(anim: String, flip: bool) -> void:
 		return
 	sprite.flip_h = flip
 	sprite.play(anim)
+	current_anim = anim
+	current_flip = flip

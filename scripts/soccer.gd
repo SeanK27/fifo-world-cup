@@ -32,7 +32,11 @@ func _relay_spectator_state() -> void:
 		NetworkManager.spectator_peer_id,
 		$Player1.global_position,
 		$Player2.global_position,
-		$Ball.global_position
+		$Ball.global_position,
+		$Player1.current_anim,
+		$Player1.current_flip,
+		$Player2.current_anim,
+		$Player2.current_flip
 	)
 
 func _go_to_main_menu() -> void:
