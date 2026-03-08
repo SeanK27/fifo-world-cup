@@ -1,39 +1,44 @@
 extends Control
 
 const STARTING_CURRENCY := 1000
-const PIXEL_FONT = preload("res://assets/fonts/PixelOperator8-Bold.ttf")
 
-const SHOP_PRICES := {"Speed":   [100, 300, 600], "Damage":  [100, 300, 600], "Stamina": [100, 300, 600],
-}
-
+const SHOP_PRICES := {"Speed":   [100, 300, 600], "Damage":  [100, 300, 600], "Stamina": [100, 300, 600],}
 const STAKE_AMOUNTS := [50, 100, 250]
 
-@onready var spectate_viewport: SubViewport = $"MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer/SpectateContainer/Spectate"
 @onready var currency_label: Label = $"MarginContainer/VBoxContainer/Bet Menu Title/Label2"
-@onready var gambling_options: VBoxContainer = $"MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer/Gambling Options"
+@onready var spectate_viewport: SubViewport = $"MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer/SpectateContainer/Spectate"
 @onready var shop_player_upgrades: HBoxContainer = $"MarginContainer/VBoxContainer/Tab Switcher/Upgrade Shop/Player vs Other Upgrades/Player Upgrades"
+@onready var score_label: Label = $"MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer/Gambling Options/ScoreLabel"
+@onready var p1_bet_btn: Button = $"MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer/Gambling Options/BetRow/P1BetButton"
+@onready var p2_bet_btn: Button = $"MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer/Gambling Options/BetRow/P2BetButton"
+@onready var active_bet_label: Label = $"MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer/Gambling Options/ActiveBetLabel"
+@onready var live_result_label: Label = $"MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer/Gambling Options/LiveResultLabel"
+@onready var quick_result_label: Label = $"MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer/Gambling Options/QuickResultLabel"
 
-# Live betting vars
-var active_bet_player: int = 0   # 0=none  1=P1  2=P2
+var stake_btns: Array[Button] = []
+var active_bet_player: int = 0
 var active_bet_amount: int = 0
 var active_bet_odds: float = 0.0
 var selected_stake: int = 50
 var current_score_left: int = 0
 var current_score_right: int = 0
 
-var score_label: Label
-var p1_bet_btn: Button
-var p2_bet_btn: Button
-var active_bet_label: Label
-var live_result_label: Label
-var stake_btns: Array[Button] = []
-var quick_result_label: Label
-
 func _ready() -> void:
 	NetworkManager.spectator_currency = STARTING_CURRENCY
 	_update_currency_display()
 	$MenuButton.pressed.connect(_on_menu_pressed)
-	_setup_gambling_ui()
+	p1_bet_btn.pressed.connect(_on_live_bet_pressed.bind(1))
+	p2_bet_btn.pressed.connect(_on_live_bet_pressed.bind(2))
+	var stake_row: HBoxContainer = $"MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer/Gambling Options/StakeRow"
+	for i in range(STAKE_AMOUNTS.size()):
+		var btn: Button = stake_row.get_child(i)
+		stake_btns.append(btn)
+		btn.toggled.connect(_on_stake_toggled.bind(STAKE_AMOUNTS[i], btn))
+	var go := $"MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer/Gambling Options"
+	go.get_node("CoinFlip50").pressed.connect(_on_coinflip_pressed.bind(50))
+	go.get_node("CoinFlip100").pressed.connect(_on_coinflip_pressed.bind(100))
+	go.get_node("CoinFlip250").pressed.connect(_on_coinflip_pressed.bind(250))
+	_update_bet_buttons()
 	_setup_shop_buttons()
 	NetworkManager.spectator_score_updated.connect(_on_spectator_score_updated)
 	if NetworkManager.is_spectator:
@@ -53,9 +58,8 @@ func _try_spend(amount: int) -> bool:
 	return true
 
 func _show_quick_result(message: String, color: Color = Color.WHITE) -> void:
-	if quick_result_label:
-		quick_result_label.text = message
-		quick_result_label.add_theme_color_override("font_color", color)
+	quick_result_label.text = message
+	quick_result_label.add_theme_color_override("font_color", color)
 
 # Gambling
 
@@ -88,7 +92,6 @@ func _on_live_bet_pressed(player: int) -> void:
 	_update_bet_buttons()
 
 func _on_spectator_score_updated(score_left: int, score_right: int) -> void:
-	#  who scored this update
 	var scorer := 0
 	if score_left > current_score_left:
 		scorer = 1
@@ -97,8 +100,6 @@ func _on_spectator_score_updated(score_left: int, score_right: int) -> void:
 	current_score_left = score_left
 	current_score_right = score_right
 	score_label.text = "P1: %d  —  P2: %d" % [current_score_left, current_score_right]
-
-	# Resolve active bet
 	if active_bet_player != 0 and scorer != 0:
 		if scorer == active_bet_player:
 			var winnings := int(active_bet_amount * active_bet_odds)
@@ -113,84 +114,7 @@ func _on_spectator_score_updated(score_left: int, score_right: int) -> void:
 		active_bet_amount = 0
 		active_bet_odds = 0.0
 		active_bet_label.text = "No active bet"
-
 	_update_bet_buttons()
-
-# Gambling UI
-
-func _make_label(text_val: String, size: int = 28, color: Color = Color(1, 0.88, 0.1, 1)) -> Label:
-	var lbl := Label.new()
-	lbl.text = text_val
-	lbl.add_theme_font_override("font", PIXEL_FONT)
-	lbl.add_theme_font_size_override("font_size", size)
-	lbl.add_theme_color_override("font_color", color)
-	return lbl
-
-func _setup_gambling_ui() -> void:
-	# Live betings
-	gambling_options.add_child(_make_label("── Live Betting ──", 30))
-
-	score_label = _make_label("P1: 0  —  P2: 0", 26, Color.WHITE)
-	gambling_options.add_child(score_label)
-
-	gambling_options.add_child(_make_label("Stake:", 24))
-
-	var stake_row := HBoxContainer.new()
-	stake_row.add_theme_constant_override("separation", 8)
-	for amount: int in STAKE_AMOUNTS:
-		var s_btn := Button.new()
-		s_btn.text = "$%d" % amount
-		s_btn.custom_minimum_size = Vector2(80, 50)
-		s_btn.add_theme_font_override("font", PIXEL_FONT)
-		s_btn.add_theme_font_size_override("font_size", 22)
-		s_btn.toggle_mode = true
-		s_btn.button_pressed = (amount == selected_stake)
-		s_btn.toggled.connect(_on_stake_toggled.bind(amount, s_btn))
-		stake_row.add_child(s_btn)
-		stake_btns.append(s_btn)
-	gambling_options.add_child(stake_row)
-
-	var bet_row := HBoxContainer.new()
-	bet_row.add_theme_constant_override("separation", 10)
-	p1_bet_btn = Button.new()
-	p1_bet_btn.custom_minimum_size = Vector2(130, 60)
-	p1_bet_btn.add_theme_font_override("font", PIXEL_FONT)
-	p1_bet_btn.add_theme_font_size_override("font_size", 22)
-	p1_bet_btn.pressed.connect(_on_live_bet_pressed.bind(1))
-	bet_row.add_child(p1_bet_btn)
-	p2_bet_btn = Button.new()
-	p2_bet_btn.custom_minimum_size = Vector2(130, 60)
-	p2_bet_btn.add_theme_font_override("font", PIXEL_FONT)
-	p2_bet_btn.add_theme_font_size_override("font_size", 22)
-	p2_bet_btn.pressed.connect(_on_live_bet_pressed.bind(2))
-	bet_row.add_child(p2_bet_btn)
-	gambling_options.add_child(bet_row)
-	_update_bet_buttons()
-
-	active_bet_label = _make_label("No active bet", 22, Color(0.8, 0.8, 0.8, 1))
-	gambling_options.add_child(active_bet_label)
-
-	live_result_label = _make_label("", 24, Color.WHITE)
-	gambling_options.add_child(live_result_label)
-
-	# Quick cash (huge scam)
-	var sep := HSeparator.new()
-	gambling_options.add_child(sep)
-
-	gambling_options.add_child(_make_label("── Quick Cash ──", 30))
-	gambling_options.add_child(_make_label("Coin Flip:", 24))
-
-	for amount: int in STAKE_AMOUNTS:
-		var btn := Button.new()
-		btn.text = "Flip $%d" % amount
-		btn.custom_minimum_size = Vector2(150, 56)
-		btn.add_theme_font_override("font", PIXEL_FONT)
-		btn.add_theme_font_size_override("font_size", 24)
-		btn.pressed.connect(_on_coinflip_pressed.bind(amount))
-		gambling_options.add_child(btn)
-
-	quick_result_label = _make_label("", 24, Color.WHITE)
-	gambling_options.add_child(quick_result_label)
 
 func _on_stake_toggled(is_on: bool, amount: int, pressed_btn: Button) -> void:
 	if not is_on:
@@ -198,8 +122,6 @@ func _on_stake_toggled(is_on: bool, amount: int, pressed_btn: Button) -> void:
 	selected_stake = amount
 	for s_btn: Button in stake_btns:
 		s_btn.set_pressed_no_signal(s_btn == pressed_btn)
-
-# Coinflip mechanics
 
 func _on_coinflip_pressed(amount: int) -> void:
 	if not _try_spend(amount):
@@ -232,7 +154,7 @@ func _on_shop_pressed(category: String, level: int, price: int, btn: Button) -> 
 	_show_quick_result("Bought %s Lv%d!" % [category, level], Color(0.2, 1.0, 0.2, 1))
 	# TODO: tell server to apply the upgrad to the playr
 
-# ── Spectator view ────────────────────────────────────────────────────────────
+# Spectator view
 
 func _setup_spectator_view() -> void:
 	var soccer_scene = load("res://scenes/soccer.tscn").instantiate()
