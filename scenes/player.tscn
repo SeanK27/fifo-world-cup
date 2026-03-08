@@ -21,10 +21,12 @@ radius = 5.0
 radius = 6.0827627
 
 [node name="Player" type="CharacterBody2D" unique_id=1204856989]
+z_index = 2
+z_as_relative = false
 script = ExtResource("1_g2els")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=177248843]
-position = Vector2(0, -12)
+position = Vector2(0, -3)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_2hs0m")
 animation = &"idle"
@@ -32,7 +34,6 @@ autoplay = "idle"
 frame_progress = 0.4793452
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2019237405]
-position = Vector2(0, -9)
 shape = SubResource("CircleShape2D_1jxqw")
 
 [node name="KickArea" type="Area2D" parent="." unique_id=326338164]
@@ -40,7 +41,6 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KickArea" unique_id=977463053]
-position = Vector2(0, -9)
 shape = SubResource("CircleShape2D_g2els")
 
 [connection signal="body_entered" from="KickArea" to="." method="_on_kick_area_body_entered"]

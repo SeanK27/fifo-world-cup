@@ -1,13 +1,18 @@
 extends CharacterBody2D
 
 
-const SPEED = 300.0
-const JUMP_VELOCITY = -400.0
+const MAX_SPEED = 150.0 # max magnitude of player 
+const ACCELERATION_FACTOR = 17.0 #multiplier for direction added to current vel
+const TURNARROUND_FACTOR = 100 #multiplier for direction when trying to turn arround
+const FRICTION = 0.85 #fraction decrease each frame when no controlls are held
+const PLAYER_FRICTION = 0.1 #fraction of the ball direction that comes from the player's direction and velocity
 
 
 # Direct kick (used server-side and in single-player)
 func kick_ball(ball: RigidBody2D) -> void:
-	var direction := (ball.global_position - global_position).normalized()
+	var direction = ((ball.global_position - global_position).normalized()*(1-PLAYER_FRICTION) 
+					+ velocity*(PLAYER_FRICTION)).normalized()
+	# print("kick in direction:", direction, " ball pos:", ball.global_position,"player pos:", global_position)
 	ball.kick(direction)  # routes through _integrate_forces so physics can't overwrite it
 
 
@@ -34,7 +39,20 @@ func _physics_process(_delta: float) -> void:
 	input_vector.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
 	input_vector.y = Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
 
-	velocity = input_vector.normalized() * SPEED
+	#if no input was pressed, apply friction
+	if input_vector == Vector2.ZERO:
+		velocity *= FRICTION
+		
+	# otherwise, add the current inputs direction scaled by the acceleration factor
+	else:
+		if (velocity + input_vector.normalized() * TURNARROUND_FACTOR).length() < velocity.length():
+			velocity += input_vector.normalized() * TURNARROUND_FACTOR
+		else:
+			velocity += input_vector.normalized() * ACCELERATION_FACTOR
+		
+	# clamp to max speed
+	velocity = velocity.limit_length(MAX_SPEED)
+		
 	move_and_slide()
 
 	# Broadcast position to all remote peers
