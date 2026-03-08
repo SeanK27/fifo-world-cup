@@ -2,6 +2,10 @@ extends Node2D
 
 # Center of the field — used to reset the ball after a goal
 const BALL_RESET_POSITION := Vector2(0, -5)
+const MATCH_DURATION := 60.0
+
+var time_remaining: float = MATCH_DURATION
+var game_over: bool = false
 
 var score_left: int = 0
 var score_right: int = 0
@@ -10,6 +14,14 @@ func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
 		_go_to_main_menu()
 	_relay_spectator_state()
+	if not game_over:
+		time_remaining -= _delta
+		if time_remaining <= 0.0:
+			time_remaining = 0.0
+			game_over = true
+			_on_game_over()
+		_update_timer_display()
+
 
 func _relay_spectator_state() -> void:
 	if not multiplayer.has_multiplayer_peer() or not multiplayer.is_server():
@@ -27,6 +39,8 @@ func _go_to_main_menu() -> void:
 	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
 
 func _ready() -> void:
+	_update_score_display()
+	_update_timer_display()
 	if not multiplayer.has_multiplayer_peer():
 		# Local / single-player mode: remove Player2 so only one player is active
 		$Player2.queue_free()
@@ -63,6 +77,14 @@ func _on_spectator_joined(peer_id: int) -> void:
 func _update_score_display() -> void:
 	$HUD/ScoreLeft.text = str(score_left)
 	$HUD/ScoreRight.text = str(score_right)	
+	
+func _update_timer_display() -> void:
+	var minutes := int(time_remaining) / 60
+	var seconds := int(time_remaining) % 60
+	$HUD/Timer.text = "%d:%02d" % [minutes, seconds]
+	
+func _on_game_over() -> void:
+	print("Game over — Final score  Left: %d  Right: %d" % [score_left, score_right])
 	
 # ── Goal handlers (wired in soccer.tscn) ──────────────────────────────────────
 
