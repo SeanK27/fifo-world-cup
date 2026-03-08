@@ -1,7 +1,12 @@
 [gd_scene format=3 uid="uid://dctoj7ufsfjtd"]
 
 [ext_resource type="FontFile" uid="uid://cub4mkwqgm8be" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="1_bold"]
+[ext_resource type="Texture2D" uid="uid://dndvdaoectfij" path="res://assets/sprites/lilref.png" id="2_oa1go"]
 [ext_resource type="Script" uid="uid://bs7d1fd3s6gif" path="res://scenes/main_menu.gd" id="2_script"]
+[ext_resource type="Texture2D" uid="uid://fkkqm8kn3riy" path="res://assets/sprites/lilguy4.png" id="3_tbmy8"]
+[ext_resource type="Texture2D" uid="uid://dvwxy5t236vug" path="res://assets/sprites/lliguy3.png" id="5_jk1qb"]
+[ext_resource type="Texture2D" uid="uid://gj6xjs77q8aa" path="res://assets/sprites/lilguy2.png" id="6_5dd4i"]
+[ext_resource type="Texture2D" uid="uid://bcctfktxi76of" path="res://assets/sprites/lilguy1.png" id="7_lgwnu"]
 
 [node name="Main Menu" type="Control" unique_id=1115933007]
 layout_mode = 3
@@ -20,6 +25,36 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.27729824, 0.6653175, 0.27795243, 1)
+
+[node name="Lilref" type="Sprite2D" parent="." unique_id=1662348572]
+position = Vector2(273.99997, 260)
+rotation = -0.4656886
+scale = Vector2(8.863892, 8.863893)
+texture = ExtResource("2_oa1go")
+
+[node name="Lilguy4" type="Sprite2D" parent="." unique_id=1527327245]
+position = Vector2(1629, 226.00006)
+rotation = 0.48406288
+scale = Vector2(9.875, 9.875)
+texture = ExtResource("3_tbmy8")
+
+[node name="Lliguy3" type="Sprite2D" parent="." unique_id=2080759758]
+position = Vector2(936, 960)
+rotation = 0.579317
+scale = Vector2(8.534811, 8.534811)
+texture = ExtResource("5_jk1qb")
+
+[node name="Lilguy2" type="Sprite2D" parent="." unique_id=1614967498]
+position = Vector2(1731, 868.00006)
+rotation = 0.0063251955
+scale = Vector2(11.166666, 11.166666)
+texture = ExtResource("6_5dd4i")
+
+[node name="Lilguy1" type="Sprite2D" parent="." unique_id=1975982908]
+position = Vector2(239, 877)
+rotation = -0.27418035
+scale = Vector2(9.395834, 9.395834)
+texture = ExtResource("7_lgwnu")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=570628047]
 layout_mode = 1
