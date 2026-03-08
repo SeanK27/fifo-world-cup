@@ -2,23 +2,14 @@
 
 [ext_resource type="PackedScene" uid="uid://dui2kk0tcr4ub" path="res://scenes/player.tscn" id="1_twfvg"]
 [ext_resource type="PackedScene" uid="uid://b62f6t3xdk2gs" path="res://scenes/ball.tscn" id="2_pmrbq"]
-[ext_resource type="Texture2D" uid="uid://c0crbwcmaeo1j" path="res://assets/sprites/field.png" id="4_eifhp"]
-[ext_resource type="Script" uid="uid://bnhm6f0bacshx" path="res://scenes/soccer.gd" id="4_soccer"]
+[ext_resource type="Texture2D" uid="uid://blsxbfxm0vngc" path="res://assets/sprites/pitch.png" id="4_eifhp"]
+[ext_resource type="Script" uid="uid://bnhm6f0bacshx" path="res://scripts/soccer.gd" id="4_soccer"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pmrbq"]
 size = Vector2(33, 83)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xak2w"]
 size = Vector2(33, 87)
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xak2w"]
-texture = ExtResource("4_eifhp")
-texture_region_size = Vector2i(149, 99)
-0:0/0 = 0
-
-[sub_resource type="TileSet" id="TileSet_sxi5j"]
-tile_size = Vector2i(149, 99)
-sources/0 = SubResource("TileSetAtlasSource_xak2w")
 
 [node name="Game" type="Node2D" unique_id=84307633]
 script = ExtResource("4_soccer")
@@ -47,7 +38,7 @@ zoom = Vector2(4, 4)
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeftGoal" unique_id=593001743]
-position = Vector2(-162.5, 23.5)
+position = Vector2(-203.5, -30)
 shape = SubResource("RectangleShape2D_pmrbq")
 
 [node name="RightGoal" type="Area2D" parent="." unique_id=644980661]
@@ -55,17 +46,19 @@ position = Vector2(67, 5)
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightGoal" unique_id=168654277]
-position = Vector2(162.5, 23.5)
+position = Vector2(136.5, -35)
 shape = SubResource("RectangleShape2D_xak2w")
-
-[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=351694261]
-position = Vector2(74, 50)
-tile_map_data = PackedByteArray(0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0)
-tile_set = SubResource("TileSet_sxi5j")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1963299871]
 scale = Vector2(0.5, 0.5)
 zoom = Vector2(4, 4)
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=307514964]
+offset_left = -278.0
+offset_top = -148.0
+offset_right = 279.0
+offset_bottom = 143.0
+texture = ExtResource("4_eifhp")
 
 [connection signal="body_entered" from="LeftGoal" to="." method="_on_left_goal_body_entered"]
 [connection signal="body_entered" from="RightGoal" to="." method="_on_right_goal_body_entered"]
