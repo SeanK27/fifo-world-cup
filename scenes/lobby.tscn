@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cssrt1iof8oa4"]
 
 [ext_resource type="FontFile" uid="uid://cub4mkwqgm8be" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="1_bold"]
-[ext_resource type="Script" uid="uid://bjuykmakwyrsy" path="res://scenes/lobby.gd" id="2_lobby"]
+[ext_resource type="Script" uid="uid://bjuykmakwyrsy" path="res://scripts/lobby.gd" id="2_lobby"]
 
 [node name="Lobby" type="Control" unique_id=910335121]
 layout_mode = 3
@@ -50,8 +50,8 @@ custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_bold")
 theme_override_font_sizes/font_size = 28
-text = "127.0.0.1"
-placeholder_text = "IP Address (default: 127.0.0.1)"
+text = "10.233.66.220"
+placeholder_text = "IP Address (default: 10.233.66.220)"
 
 [node name="HostButton" type="Button" parent="VBoxContainer" unique_id=922122589]
 custom_minimum_size = Vector2(0, 72)
@@ -66,6 +66,13 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("1_bold")
 theme_override_font_sizes/font_size = 40
 text = "JOIN GAME"
+
+[node name="SpectateButton" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_bold")
+theme_override_font_sizes/font_size = 40
+text = "SPECTATE"
 
 [node name="StatusLabel" type="Label" parent="VBoxContainer" unique_id=754111833]
 layout_mode = 2
