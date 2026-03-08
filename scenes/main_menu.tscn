@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://dctoj7ufsfjtd"]
+
+[ext_resource type="FontFile" uid="uid://cub4mkwqgm8be" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="1_bold"]
+[ext_resource type="Script" uid="uid://bs7d1fd3s6gif" path="res://scenes/main_menu.gd" id="2_script"]
+
+[node name="Main Menu" type="Control" unique_id=1115933007]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_script")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1052357854]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.27729824, 0.6653175, 0.27795243, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=570628047]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -270.0
+offset_right = 300.0
+offset_bottom = 270.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 32
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer" unique_id=1264099444]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.88, 0.1, 1)
+theme_override_fonts/font = ExtResource("1_bold")
+theme_override_font_sizes/font_size = 88
+text = "FIFO WORLD CUP"
+horizontal_alignment = 1
+
+[node name="Button2" type="Button" parent="VBoxContainer" unique_id=410800755]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_bold")
+theme_override_font_sizes/font_size = 40
+text = "PLAY"
+
+[node name="Button3" type="Button" parent="VBoxContainer" unique_id=1791041831]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_bold")
+theme_override_font_sizes/font_size = 40
+text = "SHOPPE"
+
+[node name="Button4" type="Button" parent="VBoxContainer" unique_id=122325752]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_bold")
+theme_override_font_sizes/font_size = 40
+text = "QUIT"
