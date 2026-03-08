@@ -66,13 +66,26 @@ func _on_left_goal_body_entered(body: Node2D) -> void:
 	if body.name == "Ball":
 		score_right += 1
 		print("Score — Left: %d  Right: %d" % [score_left, score_right])
+		_relay_score_to_spectator()
 		_reset_ball()
 
 func _on_right_goal_body_entered(body: Node2D) -> void:
 	if body.name == "Ball":
 		score_left += 1
 		print("Score — Left: %d  Right: %d" % [score_left, score_right])
+		_relay_score_to_spectator()
 		_reset_ball()
+
+func _relay_score_to_spectator() -> void:
+	if not multiplayer.has_multiplayer_peer() or not multiplayer.is_server():
+		return
+	if NetworkManager.spectator_peer_id == 0:
+		return
+	NetworkManager._relay_spectator_score.rpc_id(
+		NetworkManager.spectator_peer_id,
+		score_left,
+		score_right
+	)
 
 func _reset_ball() -> void:
 	# Only authoritative side triggers resets; clients receive the new state via sync

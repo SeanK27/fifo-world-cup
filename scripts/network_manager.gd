@@ -8,6 +8,7 @@ signal player_disconnected(peer_id: int)
 signal connected_to_server
 signal connection_failed
 signal spectator_state_updated(p1_pos: Vector2, p2_pos: Vector2, ball_pos: Vector2)
+signal spectator_score_updated(score_left: int, score_right: int)
 
 var remote_peer_id: int = 0
 var player2_peer_id: int = 0   # server stores P2's peer ID separately from spectator
@@ -70,6 +71,11 @@ func _send_spectator_to_betting() -> void:
 @rpc("authority", "call_remote", "unreliable")
 func _relay_spectator_game_state(p1_pos: Vector2, p2_pos: Vector2, ball_pos: Vector2) -> void:
 	spectator_state_updated.emit(p1_pos, p2_pos, ball_pos)
+
+# Server relays goal scores to the spectator
+@rpc("authority", "call_remote", "reliable")
+func _relay_spectator_score(score_left: int, score_right: int) -> void:
+	spectator_score_updated.emit(score_left, score_right)
 
 func _on_peer_connected(id: int) -> void:
 	remote_peer_id = id
