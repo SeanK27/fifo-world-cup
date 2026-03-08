@@ -13,6 +13,7 @@ var remote_peer_id: int = 0
 var player2_peer_id: int = 0   # server stores P2's peer ID separately from spectator
 var spectator_peer_id: int = 0
 var is_spectator: bool = false  # local flag set before joining as spectator
+var spectator_currency: int = 1000  # resets each time the betting scene loads
 
 func host_game() -> void:
 	var peer = ENetMultiplayerPeer.new()
