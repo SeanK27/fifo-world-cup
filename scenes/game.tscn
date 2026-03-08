@@ -1,7 +1,52 @@
 [gd_scene format=3 uid="uid://st5msephdpjd"]
 
 [ext_resource type="PackedScene" uid="uid://dctoj7ufsfjtd" path="res://scenes/main_menu.tscn" id="1_uwrxv"]
+[ext_resource type="Script" uid="uid://bewbbvvki0xmc" path="res://scripts/game_manager.gd" id="2_yqjtg"]
 
 [node name="Game" type="Node2D" unique_id=1074290147]
 
+[node name="GameManager" type="Node" parent="." unique_id=1193078731]
+script = ExtResource("2_yqjtg")
+
 [node name="Main Menu" parent="." unique_id=1115933007 instance=ExtResource("1_uwrxv")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 933.0
+offset_top = 544.0
+offset_right = 933.0
+offset_bottom = 544.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="MultiplayerHUD" type="Control" parent="." unique_id=599926445]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 0
+offset_right = 136.0
+offset_bottom = 69.0
+
+[node name="Panel" type="Panel" parent="MultiplayerHUD" unique_id=1290042286]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MultiplayerHUD/Panel" unique_id=697633771]
+layout_mode = 0
+offset_right = 133.0
+offset_bottom = 66.0
+
+[node name="HostGame" type="Button" parent="MultiplayerHUD/Panel/VBoxContainer" unique_id=1662565577]
+layout_mode = 2
+text = "Host New Game"
+
+[node name="JoinAsPlayer2" type="Button" parent="MultiplayerHUD/Panel/VBoxContainer" unique_id=1631449323]
+layout_mode = 2
+text = "Join As Player 2"
+
+[connection signal="pressed" from="MultiplayerHUD/Panel/VBoxContainer/HostGame" to="GameManager" method="_on_host_game_pressed"]
+[connection signal="pressed" from="MultiplayerHUD/Panel/VBoxContainer/HostGame" to="GameManager" method="become_host"]
+[connection signal="pressed" from="MultiplayerHUD/Panel/VBoxContainer/JoinAsPlayer2" to="GameManager" method="join_as_player_2"]
