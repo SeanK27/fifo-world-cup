@@ -86,6 +86,133 @@ theme_override_fonts/font = ExtResource("1_bold")
 theme_override_font_sizes/font_size = 40
 text = "Gambling Options"
 
+[node name="LiveBettingTitle" type="Label" parent="MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer/Gambling Options" unique_id=100000001]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.88, 0.1, 1)
+theme_override_fonts/font = ExtResource("1_bold")
+theme_override_font_sizes/font_size = 30
+text = "── Live Betting ──"
+
+[node name="ScoreLabel" type="Label" parent="MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer/Gambling Options" unique_id=100000002]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("1_bold")
+theme_override_font_sizes/font_size = 26
+text = "P1: 0  —  P2: 0"
+
+[node name="StakeLabel" type="Label" parent="MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer/Gambling Options" unique_id=100000003]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.88, 0.1, 1)
+theme_override_fonts/font = ExtResource("1_bold")
+theme_override_font_sizes/font_size = 24
+text = "Stake:"
+
+[node name="StakeRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer/Gambling Options" unique_id=100000004]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Stake50" type="Button" parent="MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer/Gambling Options/StakeRow" unique_id=100000005]
+custom_minimum_size = Vector2(80, 50)
+layout_mode = 2
+toggle_mode = true
+button_pressed = true
+theme_override_fonts/font = ExtResource("1_bold")
+theme_override_font_sizes/font_size = 22
+text = "$50"
+
+[node name="Stake100" type="Button" parent="MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer/Gambling Options/StakeRow" unique_id=100000006]
+custom_minimum_size = Vector2(80, 50)
+layout_mode = 2
+toggle_mode = true
+theme_override_fonts/font = ExtResource("1_bold")
+theme_override_font_sizes/font_size = 22
+text = "$100"
+
+[node name="Stake250" type="Button" parent="MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer/Gambling Options/StakeRow" unique_id=100000007]
+custom_minimum_size = Vector2(80, 50)
+layout_mode = 2
+toggle_mode = true
+theme_override_fonts/font = ExtResource("1_bold")
+theme_override_font_sizes/font_size = 22
+text = "$250"
+
+[node name="BetRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer/Gambling Options" unique_id=100000008]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="P1BetButton" type="Button" parent="MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer/Gambling Options/BetRow" unique_id=100000009]
+custom_minimum_size = Vector2(130, 60)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_bold")
+theme_override_font_sizes/font_size = 22
+text = "P1  2.0x"
+
+[node name="P2BetButton" type="Button" parent="MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer/Gambling Options/BetRow" unique_id=100000010]
+custom_minimum_size = Vector2(130, 60)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_bold")
+theme_override_font_sizes/font_size = 22
+text = "P2  2.0x"
+
+[node name="ActiveBetLabel" type="Label" parent="MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer/Gambling Options" unique_id=100000011]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+theme_override_fonts/font = ExtResource("1_bold")
+theme_override_font_sizes/font_size = 22
+text = "No active bet"
+
+[node name="LiveResultLabel" type="Label" parent="MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer/Gambling Options" unique_id=100000012]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("1_bold")
+theme_override_font_sizes/font_size = 24
+text = ""
+
+[node name="QuickCashSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer/Gambling Options" unique_id=100000013]
+layout_mode = 2
+
+[node name="QuickCashTitle" type="Label" parent="MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer/Gambling Options" unique_id=100000014]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.88, 0.1, 1)
+theme_override_fonts/font = ExtResource("1_bold")
+theme_override_font_sizes/font_size = 30
+text = "── Quick Cash ──"
+
+[node name="CoinFlipLabel" type="Label" parent="MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer/Gambling Options" unique_id=100000015]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.88, 0.1, 1)
+theme_override_fonts/font = ExtResource("1_bold")
+theme_override_font_sizes/font_size = 24
+text = "Coin Flip:"
+
+[node name="CoinFlip50" type="Button" parent="MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer/Gambling Options" unique_id=100000016]
+custom_minimum_size = Vector2(150, 56)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_bold")
+theme_override_font_sizes/font_size = 24
+text = "Flip $50"
+
+[node name="CoinFlip100" type="Button" parent="MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer/Gambling Options" unique_id=100000017]
+custom_minimum_size = Vector2(150, 56)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_bold")
+theme_override_font_sizes/font_size = 24
+text = "Flip $100"
+
+[node name="CoinFlip250" type="Button" parent="MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer/Gambling Options" unique_id=100000018]
+custom_minimum_size = Vector2(150, 56)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_bold")
+theme_override_font_sizes/font_size = 24
+text = "Flip $250"
+
+[node name="QuickResultLabel" type="Label" parent="MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer/Gambling Options" unique_id=100000019]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("1_bold")
+theme_override_font_sizes/font_size = 24
+text = ""
+
 [node name="SpectateContainer" type="SubViewportContainer" parent="MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
