@@ -160,6 +160,7 @@ func _setup_spectator_view() -> void:
 	var soccer_scene = load("res://scenes/soccer.tscn").instantiate()
 	spectate_viewport.add_child(soccer_scene)
 	soccer_scene.get_node("Player1/Camera2D").enabled = false
+	soccer_scene.get_node("Player2/Camera2D").enabled = false
 	soccer_scene.get_node("Camera2D").make_current()
 	NetworkManager.spectator_state_updated.connect(_on_spectator_state_updated)
 
