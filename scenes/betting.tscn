@@ -62,10 +62,9 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_fonts/font = ExtResource("1_bold")
 theme_override_font_sizes/font_size = 32
-current_tab = 1
+current_tab = 0
 
 [node name="Watch and Gamble" type="Control" parent="MarginContainer/VBoxContainer/Tab Switcher" unique_id=179450951]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -77,13 +76,28 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Live Game + Bet" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer" unique_id=1503233173]
+[node name="Gambling Options" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer" unique_id=1477693080]
 layout_mode = 2
 
-[node name="Game List" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer" unique_id=1477693080]
+[node name="Gambling Options Label" type="Label" parent="MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer/Gambling Options" unique_id=1018271016]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.88, 0.1, 1)
+theme_override_fonts/font = ExtResource("1_bold")
+theme_override_font_sizes/font_size = 40
+text = "Gambling Options"
+
+[node name="SpectateContainer" type="SubViewportContainer" parent="MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+stretch = true
+
+[node name="Spectate" type="SubViewport" parent="MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer/SpectateContainer" unique_id=743959166]
+own_world_2d = true
+size = Vector2i(640, 360)
 
 [node name="Upgrade Shop" type="Control" parent="MarginContainer/VBoxContainer/Tab Switcher" unique_id=1264684684]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
