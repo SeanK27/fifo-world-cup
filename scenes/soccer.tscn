@@ -23,10 +23,24 @@ sources/0 = SubResource("TileSetAtlasSource_xak2w")
 [node name="Game" type="Node2D" unique_id=84307633]
 script = ExtResource("4_soccer")
 
-[node name="Player" parent="." unique_id=1204856989 instance=ExtResource("1_twfvg")]
-z_index = 2
-position = Vector2(-29, -14)
+[node name="Player1" parent="." unique_id=1204856989 instance=ExtResource("1_twfvg")]
+z_index = 1
+position = Vector2(-60, -5)
 collision_mask = 5
+
+[node name="Camera2D" type="Camera2D" parent="Player1" unique_id=110015715]
+position = Vector2(1, 4)
+zoom = Vector2(4, 4)
+
+[node name="Player2" parent="." instance=ExtResource("1_twfvg")]
+z_index = 1
+position = Vector2(60, -5)
+collision_mask = 5
+
+[node name="Camera2D" type="Camera2D" parent="Player2"]
+position = Vector2(1, 4)
+zoom = Vector2(4, 4)
+enabled = false
 
 [node name="Ball" parent="." unique_id=1031230908 instance=ExtResource("2_pmrbq")]
 z_index = 1

@@ -1,0 +1,83 @@
+[gd_scene format=3 uid="uid://cssrt1iof8oa4"]
+
+[ext_resource type="FontFile" uid="uid://cub4mkwqgm8be" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="1_bold"]
+[ext_resource type="Script" uid="uid://bjuykmakwyrsy" path="res://scenes/lobby.gd" id="2_lobby"]
+
+[node name="Lobby" type="Control" unique_id=910335121]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_lobby")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1365209360]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.13, 0.22, 0.48, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=495619108]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -290.0
+offset_right = 300.0
+offset_bottom = 290.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="Title" type="Label" parent="VBoxContainer" unique_id=1923221158]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.88, 0.1, 1)
+theme_override_fonts/font = ExtResource("1_bold")
+theme_override_font_sizes/font_size = 72
+text = "MULTIPLAYER"
+horizontal_alignment = 1
+
+[node name="IPLineEdit" type="LineEdit" parent="VBoxContainer" unique_id=963974616]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_bold")
+theme_override_font_sizes/font_size = 28
+text = "127.0.0.1"
+placeholder_text = "IP Address (default: 127.0.0.1)"
+
+[node name="HostButton" type="Button" parent="VBoxContainer" unique_id=922122589]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_bold")
+theme_override_font_sizes/font_size = 40
+text = "HOST GAME"
+
+[node name="JoinButton" type="Button" parent="VBoxContainer" unique_id=169513151]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_bold")
+theme_override_font_sizes/font_size = 40
+text = "JOIN GAME"
+
+[node name="StatusLabel" type="Label" parent="VBoxContainer" unique_id=754111833]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
+theme_override_fonts/font = ExtResource("1_bold")
+theme_override_font_sizes/font_size = 24
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="BackButton" type="Button" parent="VBoxContainer" unique_id=1281530013]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_bold")
+theme_override_font_sizes/font_size = 32
+text = "BACK"
