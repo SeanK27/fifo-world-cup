@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dui2kk0tcr4ub" path="res://scenes/player.tscn" id="1_twfvg"]
 [ext_resource type="PackedScene" uid="uid://b62f6t3xdk2gs" path="res://scenes/ball.tscn" id="2_pmrbq"]
+[ext_resource type="PackedScene" uid="uid://bj4lut8jdlfh2" path="res://scenes/ref.tscn" id="2_vkfty"]
 [ext_resource type="Texture2D" uid="uid://ddiehtnrlujb7" path="res://assets/sprites/pitch.png" id="4_eifhp"]
 [ext_resource type="Script" uid="uid://bnhm6f0bacshx" path="res://scripts/soccer.gd" id="4_soccer"]
 [ext_resource type="Texture2D" uid="uid://1judhr7axlbs" path="res://assets/sprites/goal.png" id="4_xak2w"]
@@ -15,6 +16,15 @@ size = Vector2(20, 43)
 
 [node name="Game" type="Node2D" unique_id=84307633]
 script = ExtResource("4_soccer")
+
+[node name="Ref" parent="." unique_id=1114805986 instance=ExtResource("2_vkfty")]
+z_index = 1
+position = Vector2(0, -127)
+disable_mode = 1
+collision_layer = 0
+collision_mask = 0
+motion_mode = 1
+up_direction = Vector2(1, -0.0001)
 
 [node name="Player1" parent="." unique_id=1204856989 instance=ExtResource("1_twfvg")]
 position = Vector2(-60, -5)
