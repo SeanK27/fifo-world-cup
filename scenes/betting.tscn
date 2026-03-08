@@ -1,5 +1,8 @@
 [gd_scene format=3 uid="uid://dwk302bdyiikn"]
 
+[ext_resource type="FontFile" uid="uid://cub4mkwqgm8be" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="1_bold"]
+[ext_resource type="Script" uid="uid://c0wit58pw14kd" path="res://scenes/betting.gd" id="2_script"]
+
 [node name="BettingMenu" type="Control" unique_id=296294407]
 layout_mode = 3
 anchors_preset = 15
@@ -7,6 +10,16 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("2_script")
+
+[node name="Background" type="ColorRect" parent="." unique_id=51605847]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.23903647, 0.5728112, 0.23993072, 1)
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=16572159]
 layout_mode = 1
@@ -22,7 +35,7 @@ theme_override_constants/margin_bottom = 60
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1815544636]
 layout_mode = 2
-theme_override_constants/separation = 40
+theme_override_constants/separation = 60
 
 [node name="Bet Menu Title" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=2117109024]
 layout_mode = 2
@@ -30,12 +43,16 @@ layout_mode = 2
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Bet Menu Title" unique_id=642965032]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.88, 0.1, 1)
+theme_override_fonts/font = ExtResource("1_bold")
 theme_override_font_sizes/font_size = 56
 text = "Betting and Shop"
 
 [node name="Label2" type="Label" parent="MarginContainer/VBoxContainer/Bet Menu Title" unique_id=1010001142]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.88, 0.1, 1)
+theme_override_fonts/font = ExtResource("1_bold")
 theme_override_font_sizes/font_size = 56
 text = "$1000"
 horizontal_alignment = 2
@@ -43,6 +60,7 @@ horizontal_alignment = 2
 [node name="Tab Switcher" type="TabContainer" parent="MarginContainer/VBoxContainer" unique_id=604458926]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("1_bold")
 theme_override_font_sizes/font_size = 32
 current_tab = 0
 
@@ -78,6 +96,8 @@ grow_horizontal = 2
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Tab Switcher/Upgrade Shop/Player vs Other Upgrades" unique_id=1999601313]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.88, 0.1, 1)
+theme_override_fonts/font = ExtResource("1_bold")
 theme_override_font_sizes/font_size = 40
 text = "Character Upgrades"
 
@@ -91,23 +111,43 @@ theme_override_constants/separation = 16
 
 [node name="Speed" type="Label" parent="MarginContainer/VBoxContainer/Tab Switcher/Upgrade Shop/Player vs Other Upgrades/Player Upgrades/Speed" unique_id=1418061675]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.88, 0.1, 1)
+theme_override_fonts/font = ExtResource("1_bold")
 theme_override_font_sizes/font_size = 32
 text = "Speed"
 
 [node name="Level 1" type="Button" parent="MarginContainer/VBoxContainer/Tab Switcher/Upgrade Shop/Player vs Other Upgrades/Player Upgrades/Speed" unique_id=1676384194]
 custom_minimum_size = Vector2(220, 70)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("1_bold")
 theme_override_font_sizes/font_size = 28
 text = "Level 1"
 
 [node name="Level 2" type="Button" parent="MarginContainer/VBoxContainer/Tab Switcher/Upgrade Shop/Player vs Other Upgrades/Player Upgrades/Speed" unique_id=329361999]
 custom_minimum_size = Vector2(220, 70)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("1_bold")
 theme_override_font_sizes/font_size = 28
 text = "Level 2"
 
 [node name="Level 3" type="Button" parent="MarginContainer/VBoxContainer/Tab Switcher/Upgrade Shop/Player vs Other Upgrades/Player Upgrades/Speed" unique_id=1252968931]
 custom_minimum_size = Vector2(220, 70)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("1_bold")
 theme_override_font_sizes/font_size = 28
 text = "Level 3"
+
+[node name="MenuButton" type="Button" parent="." unique_id=1760958706]
+custom_minimum_size = Vector2(220, 60)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 60.0
+offset_top = -120.0
+offset_right = 280.0
+offset_bottom = -60.0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("1_bold")
+theme_override_font_sizes/font_size = 32
+text = "MENU"
