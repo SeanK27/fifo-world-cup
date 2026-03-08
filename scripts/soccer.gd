@@ -47,13 +47,6 @@ func _ready() -> void:
 func _assign_authorities(client_peer_id: int) -> void:
 	$Player1.set_multiplayer_authority(1)             # host always controls Player1
 	$Player2.set_multiplayer_authority(client_peer_id) # client controls Player2
-	_setup_cameras()
-
-func _setup_cameras() -> void:
-	var local_id := multiplayer.get_unique_id()
-	# Enable camera only for the player this peer controls
-	$Player1/Camera2D.enabled = ($Player1.get_multiplayer_authority() == local_id)
-	$Player2/Camera2D.enabled = ($Player2.get_multiplayer_authority() == local_id)
 
 # Called when a peer connects while the game is already running — must be spectator
 func _on_spectator_joined(peer_id: int) -> void:
