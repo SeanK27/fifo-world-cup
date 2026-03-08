@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://dctoj7ufsfjtd"]
 
 [ext_resource type="FontFile" uid="uid://cub4mkwqgm8be" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="1_bold"]
-[ext_resource type="Texture2D" uid="uid://dndvdaoectfij" path="res://assets/sprites/lilref.png" id="2_oa1go"]
+[ext_resource type="Texture2D" uid="uid://bl8cmxq6te6we" path="res://assets/sprites/lilref.png" id="2_oa1go"]
 [ext_resource type="Script" uid="uid://bs7d1fd3s6gif" path="res://scripts/main_menu.gd" id="2_script"]
-[ext_resource type="Texture2D" uid="uid://fkkqm8kn3riy" path="res://assets/sprites/lilguy4.png" id="3_tbmy8"]
-[ext_resource type="Texture2D" uid="uid://dvwxy5t236vug" path="res://assets/sprites/lliguy3.png" id="5_jk1qb"]
-[ext_resource type="Texture2D" uid="uid://gj6xjs77q8aa" path="res://assets/sprites/lilguy2.png" id="6_5dd4i"]
-[ext_resource type="Texture2D" uid="uid://bcctfktxi76of" path="res://assets/sprites/lilguy1.png" id="7_lgwnu"]
+[ext_resource type="Texture2D" uid="uid://dj5raeoqerm0g" path="res://assets/sprites/lilguy4.png" id="3_tbmy8"]
+[ext_resource type="Texture2D" path="res://assets/sprites/lliguy3.png" id="5_jk1qb"]
+[ext_resource type="Texture2D" uid="uid://bvwf03calnki" path="res://assets/sprites/lilguy2.png" id="6_5dd4i"]
+[ext_resource type="Texture2D" uid="uid://cof5btlmf5iss" path="res://assets/sprites/lilguy1.png" id="7_lgwnu"]
 
 [node name="Main Menu" type="Control" unique_id=1115933007]
 layout_mode = 3
