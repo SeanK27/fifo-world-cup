@@ -110,9 +110,9 @@ func _broadcast_game_over(final_left: int, final_right: int) -> void:
 func _show_game_over_popup(left: int, right: int) -> void:
 	var winner_text: String
 	if left > right:
-		winner_text = "Blue Wins!\n%d - %d" % [left, right]
-	elif right > left:
 		winner_text = "Red Wins!\n%d - %d" % [left, right]
+	elif right > left:
+		winner_text = "Blue Wins!\n%d - %d" % [left, right]
 	else:
 		winner_text = "Draw!\n%d - %d" % [left, right]
 	$HUD/WinnerPopup/WinnerLabel.text = winner_text

@@ -203,9 +203,9 @@ func _on_menu_pressed() -> void:
 func _on_spectator_game_over(left: int, right: int) -> void:
 	var winner_text: String
 	if left > right:
-		winner_text = "Blue Wins!\n%d - %d" % [left, right]
-	elif right > left:
 		winner_text = "Red Wins!\n%d - %d" % [left, right]
+	elif right > left:
+		winner_text = "Blue Wins!\n%d - %d" % [left, right]
 	else:
 		winner_text = "Draw!\n%d - %d" % [left, right]
 	winner_popup_label.text = winner_text
