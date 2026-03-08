@@ -1,7 +1,7 @@
 extends Node2D
 
 # Center of the field — used to reset the ball after a goal
-const BALL_RESET_POSITION := Vector2(0, -5)
+const BALL_RESET_POSITION := Vector2(0, -30)
 const MATCH_DURATION := 60.0
 
 var time_remaining: float = MATCH_DURATION
@@ -32,7 +32,14 @@ func _relay_spectator_state() -> void:
 		NetworkManager.spectator_peer_id,
 		$Player1.global_position,
 		$Player2.global_position,
-		$Ball.global_position
+		$Ball.global_position,
+		$Player1.current_anim,
+		$Player1.current_flip,
+		$Player2.current_anim,
+		$Player2.current_flip,
+		time_remaining,
+		score_left,
+		score_right
 	)
 
 func _go_to_main_menu() -> void:
@@ -84,24 +91,73 @@ func _update_timer_display() -> void:
 	
 func _on_game_over() -> void:
 	print("Game over — Final score  Left: %d  Right: %d" % [score_left, score_right])
-	
+	if not multiplayer.has_multiplayer_peer():
+		_show_game_over_popup(score_left, score_right)
+		return
+	if multiplayer.is_server():
+		_broadcast_game_over.rpc(score_left, score_right)
+		if NetworkManager.spectator_peer_id != 0:
+			NetworkManager._relay_spectator_game_over.rpc_id(NetworkManager.spectator_peer_id, score_left, score_right)
+	# Client: waits for _broadcast_game_over RPC from server
+
+@rpc("authority", "call_local", "reliable")
+func _broadcast_game_over(final_left: int, final_right: int) -> void:
+	score_left = final_left
+	score_right = final_right
+	_update_score_display()
+	_show_game_over_popup(final_left, final_right)
+
+func _show_game_over_popup(left: int, right: int) -> void:
+	var winner_text: String
+	if left > right:
+		winner_text = "Blue Wins!\n%d - %d" % [left, right]
+	elif right > left:
+		winner_text = "Red Wins!\n%d - %d" % [left, right]
+	else:
+		winner_text = "Draw!\n%d - %d" % [left, right]
+	$HUD/WinnerPopup/WinnerLabel.text = winner_text
+	$HUD/WinnerPopup.visible = true
+
+func _on_play_again_pressed() -> void:
+	if multiplayer.has_multiplayer_peer() and multiplayer.is_server() and NetworkManager.spectator_peer_id != 0:
+		NetworkManager._relay_spectator_to_main_menu.rpc_id(NetworkManager.spectator_peer_id)
+	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+
 # ── Goal handlers (wired in soccer.tscn) ──────────────────────────────────────
 
 func _on_left_goal_body_entered(body: Node2D) -> void:
-	if body.name == "Ball":
-		score_right += 1
-		print("Score — Left: %d  Right: %d" % [score_left, score_right])
-		_relay_score_to_spectator()
+	if body.name != "Ball":
+		return
+	if multiplayer.has_multiplayer_peer() and not multiplayer.is_server():
+		return
+	score_right += 1
+	print("Score — Left: %d  Right: %d" % [score_left, score_right])
+	_relay_score_to_spectator()
+	_reset_ball()
+	if multiplayer.has_multiplayer_peer():
+		_sync_score.rpc(score_left, score_right)
+	else:
 		_update_score_display()
-		_reset_ball()
 
 func _on_right_goal_body_entered(body: Node2D) -> void:
-	if body.name == "Ball":
-		score_left += 1
-		print("Score — Left: %d  Right: %d" % [score_left, score_right])
-		_relay_score_to_spectator()
+	if body.name != "Ball":
+		return
+	if multiplayer.has_multiplayer_peer() and not multiplayer.is_server():
+		return
+	score_left += 1
+	print("Score — Left: %d  Right: %d" % [score_left, score_right])
+	_relay_score_to_spectator()
+	_reset_ball()
+	if multiplayer.has_multiplayer_peer():
+		_sync_score.rpc(score_left, score_right)
+	else:
 		_update_score_display()
-		_reset_ball()
+
+@rpc("authority", "call_local", "reliable")
+func _sync_score(left: int, right: int) -> void:
+	score_left = left
+	score_right = right
+	_update_score_display()
 
 func _relay_score_to_spectator() -> void:
 	if not multiplayer.has_multiplayer_peer() or not multiplayer.is_server():

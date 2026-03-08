@@ -9,11 +9,14 @@ const STAKE_AMOUNTS := [50, 100, 250]
 @onready var spectate_viewport: SubViewport = $"MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer/SpectateContainer/Spectate"
 @onready var shop_player_upgrades: HBoxContainer = $"MarginContainer/VBoxContainer/Tab Switcher/Upgrade Shop/Player vs Other Upgrades/Player Upgrades"
 @onready var score_label: Label = $"MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer/Gambling Options/ScoreLabel"
+@onready var timer_label: Label = $"MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer/Gambling Options/TimerLabel"
 @onready var p1_bet_btn: Button = $"MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer/Gambling Options/BetRow/P1BetButton"
 @onready var p2_bet_btn: Button = $"MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer/Gambling Options/BetRow/P2BetButton"
 @onready var active_bet_label: Label = $"MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer/Gambling Options/ActiveBetLabel"
 @onready var live_result_label: Label = $"MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer/Gambling Options/LiveResultLabel"
 @onready var quick_result_label: Label = $"MarginContainer/VBoxContainer/Tab Switcher/Watch and Gamble/HBoxContainer/Gambling Options/QuickResultLabel"
+@onready var winner_popup: Panel = $WinnerPopup
+@onready var winner_popup_label: Label = $WinnerPopup/WinnerLabel
 
 var stake_btns: Array[Button] = []
 var active_bet_player: int = 0
@@ -41,6 +44,8 @@ func _ready() -> void:
 	_update_bet_buttons()
 	_setup_shop_buttons()
 	NetworkManager.spectator_score_updated.connect(_on_spectator_score_updated)
+	NetworkManager.spectator_game_over.connect(_on_spectator_game_over)
+	NetworkManager.spectator_to_main_menu.connect(_on_spectator_to_main_menu)
 	if NetworkManager.is_spectator:
 		_setup_spectator_view()
 
@@ -159,19 +164,53 @@ func _on_shop_pressed(category: String, level: int, price: int, btn: Button) -> 
 func _setup_spectator_view() -> void:
 	var soccer_scene = load("res://scenes/soccer.tscn").instantiate()
 	spectate_viewport.add_child(soccer_scene)
+	# Freeze the local simulation so it doesn't run its own timer/physics
+	soccer_scene.game_over = true
 	soccer_scene.get_node("Player1/Camera2D").enabled = false
 	soccer_scene.get_node("Player2/Camera2D").enabled = false
 	soccer_scene.get_node("Camera2D").make_current()
 	NetworkManager.spectator_state_updated.connect(_on_spectator_state_updated)
 
-func _on_spectator_state_updated(p1_pos: Vector2, p2_pos: Vector2, ball_pos: Vector2) -> void:
+func _on_spectator_state_updated(p1_pos: Vector2, p2_pos: Vector2, ball_pos: Vector2, p1_anim: String, p1_flip: bool, p2_anim: String, p2_flip: bool, time_remaining: float, score_left: int, score_right: int) -> void:
+	var minutes := int(time_remaining) / 60
+	var seconds := int(time_remaining) % 60
+	timer_label.text = "%d:%02d" % [minutes, seconds]
+	score_label.text = "Blue: %d  —  Red: %d" % [score_left, score_right]
+	current_score_left = score_left
+	current_score_right = score_right
+	_update_bet_buttons()
 	if spectate_viewport.get_child_count() == 0:
 		return
 	var soccer = spectate_viewport.get_child(0)
+	# Keep the in-viewport HUD in sync too
+	soccer.get_node("HUD/ScoreLeft").text = str(score_left)
+	soccer.get_node("HUD/ScoreRight").text = str(score_right)
+	soccer.get_node("HUD/Timer").text = "%d:%02d" % [minutes, seconds]
 	soccer.get_node("Player1").global_position = p1_pos
 	soccer.get_node("Player2").global_position = p2_pos
 	soccer.get_node("Ball").global_position = ball_pos
+	var p1_sprite: AnimatedSprite2D = soccer.get_node("Player1/AnimatedSprite2D")
+	p1_sprite.flip_h = p1_flip
+	p1_sprite.play(p1_anim)
+	var p2_sprite: AnimatedSprite2D = soccer.get_node("Player2/AnimatedSprite2D")
+	p2_sprite.flip_h = p2_flip
+	p2_sprite.play(p2_anim)
 
 func _on_menu_pressed() -> void:
+	NetworkManager.disconnect_network()
+	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+
+func _on_spectator_game_over(left: int, right: int) -> void:
+	var winner_text: String
+	if left > right:
+		winner_text = "Blue Wins!\n%d - %d" % [left, right]
+	elif right > left:
+		winner_text = "Red Wins!\n%d - %d" % [left, right]
+	else:
+		winner_text = "Draw!\n%d - %d" % [left, right]
+	winner_popup_label.text = winner_text
+	winner_popup.visible = true
+
+func _on_spectator_to_main_menu() -> void:
 	NetworkManager.disconnect_network()
 	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
