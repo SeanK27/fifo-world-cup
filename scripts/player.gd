@@ -17,9 +17,9 @@ func _ready():
 	randomize()
 	
 	if get_meta("player_id") == 1:
-		spritenum = str(blue_sprites.pick_random())
-	else:
 		spritenum = str(red_sprites.pick_random())
+	else:
+		spritenum = str(blue_sprites.pick_random())
 		
 	$AnimatedSprite2D.play("down"+spritenum)
 		
@@ -69,20 +69,23 @@ func _physics_process(_delta: float) -> void:
 		
 	# clamp to max speed
 	velocity = velocity.limit_length(MAX_SPEED)
-		
+	
+	var anim = "down"+spritenum
+	var flip = false
 	if velocity.length() > 0:
 		if abs(velocity.x) > abs(velocity.y):
-			if velocity.x > 0:
-				$AnimatedSprite2D.flip_h = true
-				$AnimatedSprite2D.play("left"+spritenum)
-			else:
-				$AnimatedSprite2D.flip_h = false
-				$AnimatedSprite2D.play("left"+spritenum)
+			flip = velocity.x > 0
+			anim = "left"+spritenum
 		else:
 			if velocity.y > 0:
 				sprite.play("down"+spritenum)
 			else:
 				sprite.play("up"+spritenum)
+	sprite.flip_h = flip
+	sprite.play(anim)
+	
+	if multiplayer.has_multiplayer_peer():
+		_sync_animation.rpc(anim, flip)
 		
 			
 	
@@ -98,3 +101,10 @@ func _physics_process(_delta: float) -> void:
 func _sync_position(pos: Vector2) -> void:
 	if not is_multiplayer_authority():
 		global_position = pos
+
+@rpc("any_peer", "unreliable")
+func _sync_animation(anim: String, flip: bool) -> void:
+	if is_multiplayer_authority():
+		return
+	sprite.flip_h = flip
+	sprite.play(anim)
