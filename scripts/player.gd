@@ -78,9 +78,9 @@ func _physics_process(_delta: float) -> void:
 			anim = "left"+spritenum
 		else:
 			if velocity.y > 0:
-				sprite.play("down"+spritenum)
+				anim = "down"+spritenum
 			else:
-				sprite.play("up"+spritenum)
+				anim = "up"+spritenum
 	sprite.flip_h = flip
 	sprite.play(anim)
 	
