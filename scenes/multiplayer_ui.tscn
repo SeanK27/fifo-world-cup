@@ -23,3 +23,6 @@ text = "SERVER"
 [node name="client" type="Button" parent="VBoxContainer" unique_id=445866185]
 layout_mode = 2
 text = "CLIENT"
+
+[connection signal="pressed" from="VBoxContainer/server" to="." method="_on_server_pressed"]
+[connection signal="pressed" from="VBoxContainer/client" to="." method="_on_client_pressed"]

@@ -8,7 +8,7 @@ func _ready() -> void:
 func spawn_player(id: int) -> void:
 	if not multiplayer.is_server(): return
 	
-	var player: Node = network_player.instatiate()
+	var player: Node = network_player.instantiate()
 	player.name = str(id)
 	
 	get_node(spawn_path).call_deferred("add_child", player)
