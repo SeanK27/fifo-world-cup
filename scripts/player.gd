@@ -15,7 +15,7 @@ func _on_kick_area_body_entered(body):
 	if body.name == "Ball":
 		kick_ball(body)
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	# Add the gravity.
 	#if not is_on_floor():
 		# velocity += get_gravity() * delta
