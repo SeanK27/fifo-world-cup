@@ -47,6 +47,13 @@ text = "Host New Game"
 layout_mode = 2
 text = "Join As Player 2"
 
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=2048291097]
+_spawnable_scenes = PackedStringArray("uid://t47utoid1d41")
+spawn_path = NodePath("../Players")
+spawn_limit = 2
+
+[node name="Players" type="Node2D" parent="." unique_id=357414452]
+
 [connection signal="pressed" from="MultiplayerHUD/Panel/VBoxContainer/HostGame" to="GameManager" method="_on_host_game_pressed"]
 [connection signal="pressed" from="MultiplayerHUD/Panel/VBoxContainer/HostGame" to="GameManager" method="become_host"]
 [connection signal="pressed" from="MultiplayerHUD/Panel/VBoxContainer/JoinAsPlayer2" to="GameManager" method="join_as_player_2"]
