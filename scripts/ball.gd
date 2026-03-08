@@ -2,6 +2,10 @@ extends RigidBody2D
 
 
 const FRICTION = 0.9
+const KICK_SPEED = 400
+const KICK_ROTATION = 12
+const ANGULAR_FRICTION = 0.97
+
 
 var _reset_pending := false
 var _reset_position := Vector2.ZERO
@@ -25,9 +29,13 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 		_reset_pending = false
 	elif _pending_kick:
 		state.linear_velocity = _kick_velocity
+		
+		state.angular_velocity = sign(_kick_velocity.x)*KICK_ROTATION
 		_pending_kick = false
 	else:
 		state.linear_velocity *= FRICTION
+		state.angular_velocity *= ANGULAR_FRICTION
+
 
 	# Server broadcasts state to all clients every physics tick
 	if multiplayer.has_multiplayer_peer() and multiplayer.is_server():
@@ -51,4 +59,4 @@ func _sync_ball(pos: Vector2, vel: Vector2) -> void:
 @rpc("any_peer", "reliable")
 func kick(direction: Vector2) -> void:
 	_pending_kick = true
-	_kick_velocity = direction * 400
+	_kick_velocity = direction * KICK_SPEED

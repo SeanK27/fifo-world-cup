@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://dui2kk0tcr4ub" path="res://scenes/player.tscn" id="1_twfvg"]
 [ext_resource type="PackedScene" uid="uid://b62f6t3xdk2gs" path="res://scenes/ball.tscn" id="2_pmrbq"]
 [ext_resource type="Texture2D" uid="uid://c0crbwcmaeo1j" path="res://assets/sprites/field.png" id="4_eifhp"]
-[ext_resource type="Script" uid="uid://der80qv60rlav" path="res://scenes/soccer.gd" id="4_soccer"]
+[ext_resource type="Script" uid="uid://bnhm6f0bacshx" path="res://scenes/soccer.gd" id="4_soccer"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pmrbq"]
 size = Vector2(33, 83)
@@ -24,7 +24,6 @@ sources/0 = SubResource("TileSetAtlasSource_xak2w")
 script = ExtResource("4_soccer")
 
 [node name="Player1" parent="." unique_id=1204856989 instance=ExtResource("1_twfvg")]
-z_index = 1
 position = Vector2(-60, -5)
 collision_mask = 5
 
@@ -32,18 +31,16 @@ collision_mask = 5
 position = Vector2(1, 4)
 zoom = Vector2(4, 4)
 
-[node name="Player2" parent="." instance=ExtResource("1_twfvg")]
-z_index = 1
+[node name="Player2" parent="." unique_id=109298258 instance=ExtResource("1_twfvg")]
 position = Vector2(60, -5)
 collision_mask = 5
 
-[node name="Camera2D" type="Camera2D" parent="Player2"]
+[node name="Camera2D" type="Camera2D" parent="Player2" unique_id=1079345741]
 position = Vector2(1, 4)
-zoom = Vector2(4, 4)
 enabled = false
+zoom = Vector2(4, 4)
 
 [node name="Ball" parent="." unique_id=1031230908 instance=ExtResource("2_pmrbq")]
-z_index = 1
 
 [node name="LeftGoal" type="Area2D" parent="." unique_id=863777052]
 collision_mask = 2
@@ -65,7 +62,7 @@ position = Vector2(74, 50)
 tile_map_data = PackedByteArray(0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0)
 tile_set = SubResource("TileSet_sxi5j")
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=110015715]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1963299871]
 scale = Vector2(0.5, 0.5)
 zoom = Vector2(4, 4)
 
