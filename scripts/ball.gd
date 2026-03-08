@@ -39,7 +39,7 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 
 	# Server broadcasts state to all clients every physics tick
 	if multiplayer.has_multiplayer_peer() and multiplayer.is_server():
-		_sync_ball.rpc(global_position, state.linear_velocity)
+		_sync_ball.rpc(global_position, state.linear_velocity,  state.angular_velocity) # changed for rotation 1
 
 
 # Called by soccer.gd (server/single-player only) after a goal.
@@ -50,9 +50,11 @@ func request_reset(pos: Vector2) -> void:
 
 # Client receives authoritative ball state from the server.
 @rpc("authority", "unreliable")
-func _sync_ball(pos: Vector2, vel: Vector2) -> void:
+func _sync_ball(pos: Vector2, vel: Vector2, rot: float) -> void: # changed for rotation 2
 	global_position = pos
 	linear_velocity = vel
+	angular_velocity = rot # changed for rotation 3
+	
 
 
 # Called by clients (via rpc_id(1, ...)) to apply a kick on the server.

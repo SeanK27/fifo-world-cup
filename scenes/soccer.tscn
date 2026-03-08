@@ -18,6 +18,7 @@ script = ExtResource("4_soccer")
 [node name="Player1" parent="." unique_id=1204856989 instance=ExtResource("1_twfvg")]
 position = Vector2(-60, -5)
 collision_mask = 5
+metadata/player_id = 1
 
 [node name="Camera2D" type="Camera2D" parent="Player1" unique_id=110015715]
 position = Vector2(1, 4)
@@ -27,6 +28,7 @@ zoom = Vector2(4, 4)
 [node name="Player2" parent="." unique_id=109298258 instance=ExtResource("1_twfvg")]
 position = Vector2(60, -5)
 collision_mask = 5
+metadata/player_id = 2
 
 [node name="Camera2D" type="Camera2D" parent="Player2" unique_id=1079345741]
 position = Vector2(1, 4)
