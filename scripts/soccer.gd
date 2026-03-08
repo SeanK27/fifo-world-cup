@@ -60,6 +60,10 @@ func _on_spectator_joined(peer_id: int) -> void:
 	NetworkManager.spectator_peer_id = peer_id
 	NetworkManager._send_spectator_to_betting.rpc_id(peer_id)
 
+func _update_score_display() -> void:
+	$HUD/ScoreLeft.text = str(score_left)
+	$HUD/ScoreRight.text = str(score_right)	
+	
 # ── Goal handlers (wired in soccer.tscn) ──────────────────────────────────────
 
 func _on_left_goal_body_entered(body: Node2D) -> void:
@@ -67,6 +71,7 @@ func _on_left_goal_body_entered(body: Node2D) -> void:
 		score_right += 1
 		print("Score — Left: %d  Right: %d" % [score_left, score_right])
 		_relay_score_to_spectator()
+		_update_score_display()
 		_reset_ball()
 
 func _on_right_goal_body_entered(body: Node2D) -> void:
@@ -74,6 +79,7 @@ func _on_right_goal_body_entered(body: Node2D) -> void:
 		score_left += 1
 		print("Score — Left: %d  Right: %d" % [score_left, score_right])
 		_relay_score_to_spectator()
+		_update_score_display()
 		_reset_ball()
 
 func _relay_score_to_spectator() -> void:
