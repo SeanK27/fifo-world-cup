@@ -1,38 +1,13 @@
 [gd_scene format=3 uid="uid://dui2kk0tcr4ub"]
 
-[ext_resource type="Texture2D" uid="uid://cev7w6p4agpo5" path="res://assets/sprites/knight.png" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://dq3s5ds2pvvxm" path="res://scripts/player.gd" id="1_g2els"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_onrkg"]
-atlas = ExtResource("1_4flbx")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_i3pqv"]
-atlas = ExtResource("1_4flbx")
-region = Rect2(32, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hqtel"]
-atlas = ExtResource("1_4flbx")
-region = Rect2(64, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_sweqy"]
-atlas = ExtResource("1_4flbx")
-region = Rect2(96, 0, 32, 32)
+[ext_resource type="Texture2D" uid="uid://bcctfktxi76of" path="res://assets/sprites/lilguy1.png" id="2_g2els"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_2hs0m"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_onrkg")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_i3pqv")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hqtel")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_sweqy")
+"texture": ExtResource("2_g2els")
 }],
 "loop": true,
 "name": &"idle",
@@ -40,22 +15,24 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1jxqw"]
-radius = 6.0
+radius = 5.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g2els"]
-radius = 7.0
+radius = 6.0827627
 
 [node name="Player" type="CharacterBody2D" unique_id=1204856989]
 script = ExtResource("1_g2els")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=177248843]
 position = Vector2(0, -12)
+scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_2hs0m")
 animation = &"idle"
 autoplay = "idle"
+frame_progress = 0.4793452
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2019237405]
-position = Vector2(0, -6)
+position = Vector2(0, -9)
 shape = SubResource("CircleShape2D_1jxqw")
 
 [node name="KickArea" type="Area2D" parent="." unique_id=326338164]
@@ -63,7 +40,7 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KickArea" unique_id=977463053]
-position = Vector2(0, -6)
+position = Vector2(0, -9)
 shape = SubResource("CircleShape2D_g2els")
 
 [connection signal="body_entered" from="KickArea" to="." method="_on_kick_area_body_entered"]
