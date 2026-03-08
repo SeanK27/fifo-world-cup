@@ -1,8 +1,8 @@
 extends RigidBody2D
 
 
-const FRICTION = 0.9
-const KICK_SPEED = 400
+const FRICTION = 0.91
+const KICK_SPEED = 300
 const KICK_ROTATION = 12
 const ANGULAR_FRICTION = 0.97
 const BALL_RESET_POSITION := Vector2(0, -30)
