@@ -2,14 +2,12 @@
 
 [ext_resource type="PackedScene" uid="uid://otiw4dblwc21" path="res://scenes/multiplayer_ui.tscn" id="1_qow58"]
 [ext_resource type="Script" uid="uid://dyq43dqpycnbq" path="res://scripts/multiplayer_spawner.gd" id="2_7gwa3"]
-[ext_resource type="PackedScene" uid="uid://bke3hbr0bledc" path="res://scenes/network_player.tscn" id="3_7gwa3"]
 
 [node name="MultiplayerExample" type="Node2D" unique_id=1601443366]
 
 [node name="MultiplayerUI" parent="." unique_id=2043122905 instance=ExtResource("1_qow58")]
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1779610741]
-_spawnable_scenes = PackedStringArray("uid://bke3hbr0bledc")
+_spawnable_scenes = PackedStringArray("uid://dui2kk0tcr4ub")
 spawn_path = NodePath("..")
 script = ExtResource("2_7gwa3")
-network_player = ExtResource("3_7gwa3")
