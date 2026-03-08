@@ -37,6 +37,7 @@ enabled = false
 zoom = Vector2(4, 4)
 
 [node name="Ball" parent="." unique_id=1031230908 instance=ExtResource("2_pmrbq")]
+position = Vector2(0, -30)
 
 [node name="LeftGoal" type="Area2D" parent="." unique_id=863777052]
 collision_mask = 2
@@ -124,5 +125,35 @@ theme_override_fonts/font = ExtResource("6_sxi5j")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="WinnerPopup" type="Panel" parent="HUD" unique_id=2111111111]
+visible = false
+offset_left = -120.0
+offset_top = -55.0
+offset_right = 120.0
+offset_bottom = 70.0
+
+[node name="WinnerLabel" type="Label" parent="HUD/WinnerPopup" unique_id=-2072745074]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 235.0
+offset_bottom = 75.0
+theme_override_fonts/font = ExtResource("6_sxi5j")
+theme_override_font_sizes/font_size = 12
+text = "Winner"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlayAgainButton" type="Button" parent="HUD/WinnerPopup" unique_id=-1961633963]
+layout_mode = 0
+offset_left = 55.0
+offset_top = 82.0
+offset_right = 185.0
+offset_bottom = 118.0
+theme_override_fonts/font = ExtResource("6_sxi5j")
+theme_override_font_sizes/font_size = 10
+text = "Play Again"
+
 [connection signal="body_entered" from="LeftGoal" to="." method="_on_left_goal_body_entered"]
 [connection signal="body_entered" from="RightGoal" to="." method="_on_right_goal_body_entered"]
+[connection signal="pressed" from="HUD/WinnerPopup/PlayAgainButton" to="." method="_on_play_again_pressed"]

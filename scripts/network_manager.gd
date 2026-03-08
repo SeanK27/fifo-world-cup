@@ -7,8 +7,10 @@ signal player_connected(peer_id: int)
 signal player_disconnected(peer_id: int)
 signal connected_to_server
 signal connection_failed
-signal spectator_state_updated(p1_pos: Vector2, p2_pos: Vector2, ball_pos: Vector2, p1_anim: String, p1_flip: bool, p2_anim: String, p2_flip: bool)
+signal spectator_state_updated(p1_pos: Vector2, p2_pos: Vector2, ball_pos: Vector2, p1_anim: String, p1_flip: bool, p2_anim: String, p2_flip: bool, time_remaining: float, score_left: int, score_right: int)
 signal spectator_score_updated(score_left: int, score_right: int)
+signal spectator_game_over(score_left: int, score_right: int)
+signal spectator_to_main_menu
 
 var remote_peer_id: int = 0
 var player2_peer_id: int = 0   # server stores P2's peer ID separately from spectator
@@ -69,8 +71,18 @@ func _send_spectator_to_betting() -> void:
 
 # Server relays live game positions so the spectator's SubViewport can mirror them
 @rpc("authority", "call_remote", "unreliable")
-func _relay_spectator_game_state(p1_pos: Vector2, p2_pos: Vector2, ball_pos: Vector2, p1_anim: String, p1_flip: bool, p2_anim: String, p2_flip: bool) -> void:
-	spectator_state_updated.emit(p1_pos, p2_pos, ball_pos, p1_anim, p1_flip, p2_anim, p2_flip)
+func _relay_spectator_game_state(p1_pos: Vector2, p2_pos: Vector2, ball_pos: Vector2, p1_anim: String, p1_flip: bool, p2_anim: String, p2_flip: bool, time_remaining: float, score_left: int, score_right: int) -> void:
+	spectator_state_updated.emit(p1_pos, p2_pos, ball_pos, p1_anim, p1_flip, p2_anim, p2_flip, time_remaining, score_left, score_right)
+
+# Server relays game over result to the spectator
+@rpc("authority", "call_remote", "reliable")
+func _relay_spectator_game_over(left: int, right: int) -> void:
+	spectator_game_over.emit(left, right)
+
+# Server tells the spectator to return to the main menu
+@rpc("authority", "call_remote", "reliable")
+func _relay_spectator_to_main_menu() -> void:
+	spectator_to_main_menu.emit()
 
 # Server relays goal scores to the spectator
 @rpc("authority", "call_remote", "reliable")
