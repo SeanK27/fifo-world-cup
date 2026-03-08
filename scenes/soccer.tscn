@@ -85,9 +85,8 @@ texture = ExtResource("4_eifhp")
 collision_layer = 15
 collision_mask = 15
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D" unique_id=767483318]
-build_mode = 1
-polygon = PackedVector2Array(-188, -7, -203, -7, -203, -53, -188, -53, -188, -118, 188, -118, 188, -52, 202, -52, 202, -8, 188, -8, 188, 59, -188, 59)
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D" unique_id=1408254991]
+polygon = PackedVector2Array(-203, -7, -203, -53, -188, -53, -188, -118, 187, -119, 188, -52, 202, -52, 202, -8, 188, -8, 188, 58, -188, 58, -188, -9, -202, -9, -202, -6, -278, -7, -278, 143, 279, 143, 279, -148, -278, -148, -278, -8)
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=1723724815]
 follow_viewport_enabled = true
