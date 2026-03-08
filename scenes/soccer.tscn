@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://ddiehtnrlujb7" path="res://assets/sprites/pitch.png" id="4_eifhp"]
 [ext_resource type="Script" uid="uid://bnhm6f0bacshx" path="res://scripts/soccer.gd" id="4_soccer"]
 [ext_resource type="Texture2D" uid="uid://1judhr7axlbs" path="res://assets/sprites/goal.png" id="4_xak2w"]
+[ext_resource type="FontFile" uid="uid://dk3p5it5uxtt3" path="res://assets/fonts/PixelOperator8.ttf" id="6_sxi5j"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pmrbq"]
 size = Vector2(25, 43)
@@ -86,6 +87,42 @@ collision_mask = 15
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D" unique_id=1408254991]
 polygon = PackedVector2Array(-203, -7, -203, -53, -188, -53, -188, -118, 187, -119, 188, -52, 202, -52, 202, -8, 188, -8, 188, 58, -188, 58, -188, -9, -202, -9, -202, -6, -278, -7, -278, 143, 279, 143, 279, -148, -278, -148, -278, -8)
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1723724815]
+follow_viewport_enabled = true
+
+[node name="ScoreLeft" type="Label" parent="HUD" unique_id=1124542819]
+z_index = 3
+offset_left = -184.0
+offset_top = 74.0
+offset_right = -129.0
+offset_bottom = 125.0
+theme_override_fonts/font = ExtResource("6_sxi5j")
+theme_override_font_sizes/font_size = 16
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScoreRight" type="Label" parent="HUD" unique_id=1583415401]
+z_index = 1
+offset_left = 130.0
+offset_top = 75.0
+offset_right = 184.0
+offset_bottom = 125.0
+theme_override_fonts/font = ExtResource("6_sxi5j")
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Timer" type="Label" parent="HUD" unique_id=1958183617]
+z_index = 1
+offset_left = -57.0
+offset_top = 74.0
+offset_right = 57.0
+offset_bottom = 125.0
+theme_override_fonts/font = ExtResource("6_sxi5j")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="body_entered" from="LeftGoal" to="." method="_on_left_goal_body_entered"]
 [connection signal="body_entered" from="RightGoal" to="." method="_on_right_goal_body_entered"]
