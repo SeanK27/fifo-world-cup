@@ -2,9 +2,9 @@
 
 [ext_resource type="PackedScene" uid="uid://dui2kk0tcr4ub" path="res://scenes/player.tscn" id="1_twfvg"]
 [ext_resource type="PackedScene" uid="uid://b62f6t3xdk2gs" path="res://scenes/ball.tscn" id="2_pmrbq"]
-[ext_resource type="Texture2D" uid="uid://blsxbfxm0vngc" path="res://assets/sprites/pitch.png" id="4_eifhp"]
+[ext_resource type="Texture2D" uid="uid://ddiehtnrlujb7" path="res://assets/sprites/pitch.png" id="4_eifhp"]
 [ext_resource type="Script" uid="uid://bnhm6f0bacshx" path="res://scripts/soccer.gd" id="4_soccer"]
-[ext_resource type="Texture2D" uid="uid://dudj3w3k0t1s1" path="res://assets/sprites/goal.png" id="4_xak2w"]
+[ext_resource type="Texture2D" uid="uid://1judhr7axlbs" path="res://assets/sprites/goal.png" id="4_xak2w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pmrbq"]
 size = Vector2(25, 43)
@@ -79,6 +79,14 @@ offset_top = -148.0
 offset_right = 279.0
 offset_bottom = 143.0
 texture = ExtResource("4_eifhp")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=652498043]
+collision_layer = 15
+collision_mask = 15
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D" unique_id=767483318]
+build_mode = 1
+polygon = PackedVector2Array(-188, -7, -203, -7, -203, -53, -188, -53, -188, -118, 188, -118, 188, -52, 202, -52, 202, -8, 188, -8, 188, 59, -188, 59)
 
 [connection signal="body_entered" from="LeftGoal" to="." method="_on_left_goal_body_entered"]
 [connection signal="body_entered" from="RightGoal" to="." method="_on_right_goal_body_entered"]
