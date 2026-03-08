@@ -4,12 +4,13 @@
 [ext_resource type="PackedScene" uid="uid://b62f6t3xdk2gs" path="res://scenes/ball.tscn" id="2_pmrbq"]
 [ext_resource type="Texture2D" uid="uid://blsxbfxm0vngc" path="res://assets/sprites/pitch.png" id="4_eifhp"]
 [ext_resource type="Script" uid="uid://bnhm6f0bacshx" path="res://scripts/soccer.gd" id="4_soccer"]
+[ext_resource type="Texture2D" uid="uid://dudj3w3k0t1s1" path="res://assets/sprites/goal.png" id="4_xak2w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pmrbq"]
-size = Vector2(33, 83)
+size = Vector2(25, 43)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xak2w"]
-size = Vector2(33, 87)
+size = Vector2(20, 43)
 
 [node name="Game" type="Node2D" unique_id=84307633]
 script = ExtResource("4_soccer")
@@ -38,16 +39,33 @@ zoom = Vector2(4, 4)
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeftGoal" unique_id=593001743]
-position = Vector2(-203.5, -30)
+position = Vector2(-199.5, -30.5)
 shape = SubResource("RectangleShape2D_pmrbq")
+
+[node name="TextureRect" type="TextureRect" parent="LeftGoal" unique_id=326451115]
+z_index = 1
+offset_left = -203.0
+offset_top = -53.0
+offset_right = -187.0
+offset_bottom = -7.0
+texture = ExtResource("4_xak2w")
 
 [node name="RightGoal" type="Area2D" parent="." unique_id=644980661]
 position = Vector2(67, 5)
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightGoal" unique_id=168654277]
-position = Vector2(136.5, -35)
+position = Vector2(130, -34.5)
 shape = SubResource("RectangleShape2D_xak2w")
+
+[node name="TextureRect" type="TextureRect" parent="RightGoal" unique_id=1859695478]
+z_index = 1
+offset_left = 120.0
+offset_top = -57.0
+offset_right = 135.0
+offset_bottom = -13.0
+texture = ExtResource("4_xak2w")
+flip_h = true
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1963299871]
 scale = Vector2(0.5, 0.5)
