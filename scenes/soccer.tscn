@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://dui2kk0tcr4ub" path="res://scenes/player.tscn" id="1_twfvg"]
 [ext_resource type="PackedScene" uid="uid://b62f6t3xdk2gs" path="res://scenes/ball.tscn" id="2_pmrbq"]
 [ext_resource type="Texture2D" uid="uid://b0nvp84ikyihl" path="res://assets/sprites/world_tileset.png" id="3_pmrbq"]
+[ext_resource type="Script" path="res://scenes/soccer.gd" id="4_soccer"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eifhp"]
 texture = ExtResource("3_pmrbq")
@@ -158,15 +159,26 @@ size = Vector2(33, 83)
 size = Vector2(33, 87)
 
 [node name="Game" type="Node2D" unique_id=84307633]
+script = ExtResource("4_soccer")
 
-[node name="Player" parent="." unique_id=1204856989 instance=ExtResource("1_twfvg")]
+[node name="Player1" parent="." unique_id=1204856989 instance=ExtResource("1_twfvg")]
 z_index = 1
-position = Vector2(1, -5)
+position = Vector2(-60, -5)
 collision_mask = 5
 
-[node name="Camera2D" type="Camera2D" parent="Player" unique_id=110015715]
+[node name="Camera2D" type="Camera2D" parent="Player1" unique_id=110015715]
 position = Vector2(1, 4)
 zoom = Vector2(4, 4)
+
+[node name="Player2" parent="." instance=ExtResource("1_twfvg")]
+z_index = 1
+position = Vector2(60, -5)
+collision_mask = 5
+
+[node name="Camera2D" type="Camera2D" parent="Player2"]
+position = Vector2(1, 4)
+zoom = Vector2(4, 4)
+enabled = false
 
 [node name="Ball" parent="." unique_id=1031230908 instance=ExtResource("2_pmrbq")]
 z_index = 1

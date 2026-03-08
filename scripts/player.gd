@@ -5,38 +5,45 @@ const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 
 
-# handle collision with ball objects
-func kick_ball(ball):
-	var direction  = (ball.global_position - global_position).normalized() # get direction from player to ball
-	ball.linear_velocity = direction * 400
-	
+# Direct kick (used server-side and in single-player)
+func kick_ball(ball: RigidBody2D) -> void:
+	var direction := (ball.global_position - global_position).normalized()
+	ball.kick(direction)  # routes through _integrate_forces so physics can't overwrite it
 
-func _on_kick_area_body_entered(body):
-	if body.name == "Ball":
+
+func _on_kick_area_body_entered(body: Node2D) -> void:
+	if body.name != "Ball":
+		return
+	# Only the authoritative peer for this player initiates a kick
+	if not is_multiplayer_authority():
+		return
+	if not multiplayer.has_multiplayer_peer() or multiplayer.is_server():
 		kick_ball(body)
+	else:
+		# Client: request the server to apply the kick on the authoritative ball
+		var direction := (body.global_position - global_position).normalized()
+		body.kick.rpc_id(1, direction)
 
-func _physics_process(delta: float) -> void:
-	# Add the gravity.
-	#if not is_on_floor():
-		# velocity += get_gravity() * delta
 
-	# Handle jump.
-	#if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		#velocity.y = JUMP_VELOCITY
+func _physics_process(_delta: float) -> void:
+	# Only the controlling peer processes input for this player
+	if not is_multiplayer_authority():
+		return
 
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	
-	var input_vector =  Vector2.ZERO
+	var input_vector := Vector2.ZERO
 	input_vector.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
 	input_vector.y = Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
-	
-	#var direction := Input.get_axis("ui_left", "ui_right")
-	#if direction:
-		#velocity.x = direction * SPEED
-	#else:
-		#velocity.x = move_toward(velocity.x, 0, SPEED)
 
 	velocity = input_vector.normalized() * SPEED
-	
 	move_and_slide()
+
+	# Broadcast position to all remote peers
+	if multiplayer.has_multiplayer_peer():
+		_sync_position.rpc(global_position)
+
+
+# Receives authoritative position updates from the controlling peer
+@rpc("any_peer", "unreliable")
+func _sync_position(pos: Vector2) -> void:
+	if not is_multiplayer_authority():
+		global_position = pos
