@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cssrt1iof8oa4"]
 
 [ext_resource type="FontFile" uid="uid://cub4mkwqgm8be" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="1_bold"]
-[ext_resource type="Script" uid="uid://bjuykmakwyrsy" path="res://scenes/lobby.gd" id="2_lobby"]
+[ext_resource type="Script" uid="uid://bjuykmakwyrsy" path="res://scripts/lobby.gd" id="2_lobby"]
 
 [node name="Lobby" type="Control" unique_id=910335121]
 layout_mode = 3

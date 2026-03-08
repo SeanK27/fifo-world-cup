@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://dcc4tet8kf1jw"]
+
+[ext_resource type="Script" path="res://scripts/multiplayer/multiplayer_controller.gd" id="1_80evv"]
+[ext_resource type="Texture2D" uid="uid://cev7w6p4agpo5" path="res://assets/sprites/knight.png" id="2_2d20i"]
+[ext_resource type="Script" path="res://scripts/multiplayer/multiplayer_input.gd" id="2_k8tkd"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_jlq18"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_onrkg"]
+atlas = ExtResource("2_2d20i")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i3pqv"]
+atlas = ExtResource("2_2d20i")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hqtel"]
+atlas = ExtResource("2_2d20i")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sweqy"]
+atlas = ExtResource("2_2d20i")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_k8tkd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_onrkg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i3pqv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hqtel")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sweqy")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jlq18"]
+radius = 6.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xk3hh"]
+radius = 7.0
+
+[node name="MultiplayerPlayer" type="CharacterBody2D" unique_id=1144924001]
+script = ExtResource("1_80evv")
+
+[node name="InputSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1453500763]
+replication_config = SubResource("SceneReplicationConfig_jlq18")
+script = ExtResource("2_k8tkd")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1319359758]
+position = Vector2(0, -12)
+sprite_frames = SubResource("SpriteFrames_k8tkd")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=937439759]
+position = Vector2(0, -6)
+shape = SubResource("CircleShape2D_jlq18")
+
+[node name="KickArea" type="Area2D" parent="." unique_id=1887487814]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KickArea" unique_id=1532144079]
+position = Vector2(0, -6)
+shape = SubResource("CircleShape2D_xk3hh")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1060322432]
+position = Vector2(1, 4)
+zoom = Vector2(4, 4)

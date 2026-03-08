@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dwk302bdyiikn"]
 
 [ext_resource type="FontFile" uid="uid://cub4mkwqgm8be" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="1_bold"]
-[ext_resource type="Script" uid="uid://c0wit58pw14kd" path="res://scenes/betting.gd" id="2_script"]
+[ext_resource type="Script" uid="uid://c0wit58pw14kd" path="res://scripts/betting.gd" id="2_script"]
 
 [node name="BettingMenu" type="Control" unique_id=296294407]
 layout_mode = 3
