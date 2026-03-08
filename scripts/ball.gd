@@ -5,6 +5,7 @@ const FRICTION = 0.9
 const KICK_SPEED = 400
 const KICK_ROTATION = 12
 const ANGULAR_FRICTION = 0.97
+const BALL_RESET_POSITION := Vector2(0, -30)
 
 
 var _reset_pending := false
@@ -62,3 +63,7 @@ func _sync_ball(pos: Vector2, vel: Vector2, rot: float) -> void: # changed for r
 func kick(direction: Vector2) -> void:
 	_pending_kick = true
 	_kick_velocity = direction * KICK_SPEED
+
+
+func _on_get_ball_button_pressed() -> void:
+	request_reset(BALL_RESET_POSITION)
