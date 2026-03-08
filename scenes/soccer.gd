@@ -29,6 +29,7 @@ func _setup_cameras() -> void:
 	# Enable camera only for the player this peer controls
 	$Player1/Camera2D.enabled = ($Player1.get_multiplayer_authority() == local_id)
 	$Player2/Camera2D.enabled = ($Player2.get_multiplayer_authority() == local_id)
+	$Player1/AnimatedSprite
 
 # ── Goal handlers (wired in soccer.tscn) ──────────────────────────────────────
 

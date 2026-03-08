@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 const MAX_SPEED = 150.0 # max magnitude of player 
 const ACCELERATION_FACTOR = 17.0 #multiplier for direction added to current vel
@@ -7,6 +8,22 @@ const TURNARROUND_FACTOR = 100 #multiplier for direction when trying to turn arr
 const FRICTION = 0.85 #fraction decrease each frame when no controlls are held
 const PLAYER_FRICTION = 0.1 #fraction of the ball direction that comes from the player's direction and velocity
 
+var blue_sprites = [1, 2]
+var red_sprites = [3 ,4]
+
+var spritenum = "1"
+
+func _ready():
+	randomize()
+	
+	if get_meta("player_id") == 1:
+		spritenum = str(blue_sprites.pick_random())
+	else:
+		spritenum = str(red_sprites.pick_random())
+		
+	$AnimatedSprite2D.play("down"+spritenum)
+		
+	
 
 # Direct kick (used server-side and in single-player)
 func kick_ball(ball: RigidBody2D) -> void:
@@ -53,6 +70,22 @@ func _physics_process(_delta: float) -> void:
 	# clamp to max speed
 	velocity = velocity.limit_length(MAX_SPEED)
 		
+	if velocity.length() > 0:
+		if abs(velocity.x) > abs(velocity.y):
+			if velocity.x > 0:
+				$AnimatedSprite2D.flip_h = true
+				$AnimatedSprite2D.play("left"+spritenum)
+			else:
+				$AnimatedSprite2D.flip_h = false
+				$AnimatedSprite2D.play("left"+spritenum)
+		else:
+			if velocity.y > 0:
+				sprite.play("down"+spritenum)
+			else:
+				sprite.play("up"+spritenum)
+		
+			
+	
 	move_and_slide()
 
 	# Broadcast position to all remote peers
